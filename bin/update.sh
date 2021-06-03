@@ -95,13 +95,7 @@ echo
 echo "Changed files:"
 git status --untracked-files=no --porcelain || true
 echo
-echo "Create release commit & tag for v${NEW_VERSION} now? [y/N]"
-read -r RESP
-echo
-if [ "$RESP" != "y" ] && [ "$RESP" != "Y" ]; then
-    echo "No new commit. No new tag. Proceed manually."
-    exit 0
-fi
+echo "Creating release commit & tag for v${NEW_VERSION} now."
 
 run git add --update "${WORKSPACE_ROOT}"
 run git commit --message "Bumped version to ${NEW_VERSION}"
