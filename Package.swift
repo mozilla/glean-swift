@@ -3,7 +3,7 @@ import PackageDescription
 
 let checksum = "50de2ff5285f40048b108caf9199410fc25304137e4664b60cec8fd01e3dd15c"
 let version = "38.0.2"
-let url = "https://github.com/badboy/glean-swift/releases/download/\(version)/Glean.xcframework.zip"
+let url = "https://github.com/mozilla/glean/releases/download/v\(version)/Glean.xcframework.zip"
 
 let package = Package(
     name: "Glean",
