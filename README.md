@@ -10,6 +10,18 @@ The full Glean SDK documentation is available online:
 
 ## [The Glean SDK Book][book]
 
+## Development
+
+The Glean SDK is developed in the [mozilla/glean](https://github.com/mozilla/glean) repository.
+
+## Contact
+
+To contact us you can:
+
+* Find us in the [#glean channel on chat.mozilla.org](https://chat.mozilla.org/#/room/#glean:mozilla.org).
+* To report issues or request changes, file a bug in [Bugzilla in Data Platform & Tools :: Glean: SDK][newbugzilla].
+* Send an email to *glean-team@mozilla.com*.
+
 ## License
 
     This Source Code Form is subject to the terms of the Mozilla Public
@@ -18,3 +30,4 @@ The full Glean SDK documentation is available online:
 
 [project-overview]: https://docs.telemetry.mozilla.org/concepts/glean/glean.html
 [book]: https://mozilla.github.io/glean/
+[newbugzilla]: https://bugzilla.mozilla.org/enter_bug.cgi?product=Data+Platform+and+Tools&component=Glean%3A+SDK&priority=P3&status_whiteboard=%5Btelemetry%3Aglean-rs%3Am%3F%5D
