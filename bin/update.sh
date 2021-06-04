@@ -71,7 +71,7 @@ if [[ -n "$DRY_RUN" ]]; then
     DOIT=n
 fi
 
-url="https://github.com/mozilla/glean/releases/download/${NEW_VERSION}/Glean.xcframework.zip"
+url="https://github.com/mozilla/glean/releases/download/v${NEW_VERSION}/Glean.xcframework.zip"
 echo "Release URL: ${url}"
 
 if [ ! -f "Glean.xcframework.zip" ]; then
