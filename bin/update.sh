@@ -15,7 +15,7 @@
 # DRY_RUN - Do not modify files or run destructive commands when set.
 # VERB    - Log commands that are run when set.
 
-set -eo pipefail
+set -xeo pipefail
 
 run() {
   [ "${VERB:-0}" != 0 ] && echo "+ $*"
