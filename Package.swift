@@ -7,7 +7,7 @@ let url = "https://github.com/mozilla/glean/releases/download/v\(version)/Glean.
 
 let package = Package(
     name: "Glean",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(name: "Glean", targets: ["Glean"]),
     ],
