@@ -33,7 +33,7 @@ SED="sed"
 WORKSPACE_ROOT="$( cd "$(dirname "$0")/.." ; pwd -P )"
 
 if [ -z "$1" ]; then
-    echo "Usage: $(basename "$0") <new version>"
+    echo "Usage: $(basename "$0") <new version> [--ios-version <ios version>]"
     echo
     echo "Publish a new Glean Swift release."
     exit 1
@@ -49,7 +49,26 @@ if ! echo "$NEW_VERSION" | grep --quiet --extended-regexp '^[0-9]+\.[0-9]+\.[0-9
     exit 1
 fi
 
+UPDATE_IOS=n
+if [ -n "$2" ] && [ "$2" == "--ios-version" ]; then
+    if [ -z "$3" ]; then
+        echo "error: missing argument for --ios-version"
+        exit 1
+    fi
+
+    IOS_VERSION="$3"
+    if ! echo "$IOS_VERSION" | grep --quiet '^v[0-9][0-9]$'; then
+        echo "error: Specified iOS version '${IOS_VERSION}' doesn't match a valid major version (example: \"v15\")"
+        echo "error: Use MAJOR versions only"
+        echo "error: See https://developer.apple.com/documentation/packagedescription/supportedplatform/iosversion for valid iOS versions"
+        exit 1
+    fi
+
+    UPDATE_IOS=y
+fi
+
 echo "Preparing update to v${NEW_VERSION} (${DATE})"
+echo "Supporting iOS version ${IOS_VERSION}"
 echo "Workspace root: ${WORKSPACE_ROOT}"
 echo
 
@@ -60,7 +79,7 @@ if [ -z "$ALLOW_DIRTY" ] && [ -n "${GIT_STATUS_OUTPUT}" ]; then
     echo
     echo "${GIT_STATUS_OUTPUT}"
     echo
-    echo 'To proceed despite this and include the uncommited changes, set the `ALLOW_DIRTY` environment variable.'
+    echo "To proceed despite this and include the uncommited changes, set the $(ALLOW_DIRTY) environment variable."
     exit 1
 
 fi
@@ -84,11 +103,20 @@ checksum=$(shasum -a 256 Glean.xcframework.zip | awk '{print $1}')
 echo "Checksum: ${checksum}"
 
 FILE=Package.swift
+if [ $UPDATE_IOS == "y" ]; then
+run $SED -i.bak -E \
+    -e "s/^let version = \"[0-9a-z.-]+\"/let version = \"${NEW_VERSION}\"/" \
+    -e "s/^let checksum = \"[0-9a-z.-]+\"/let checksum = \"${checksum}\"/" \
+    -e "s/\.iOS\(\.v[0-9][0-9]\)/.iOS(.${IOS_VERSION})/" \
+    "${WORKSPACE_ROOT}/${FILE}"
+else
 run $SED -i.bak -E \
     -e "s/^let version = \"[0-9a-z.-]+\"/let version = \"${NEW_VERSION}\"/" \
     -e "s/^let checksum = \"[0-9a-z.-]+\"/let checksum = \"${checksum}\"/" \
     "${WORKSPACE_ROOT}/${FILE}"
+fi
 run rm "${WORKSPACE_ROOT}/${FILE}.bak"
+
 
 echo "Everything prepared for v${NEW_VERSION}"
 echo
