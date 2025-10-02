@@ -1,8 +1,8 @@
 // swift-tools-version:5.5
 import PackageDescription
 
-let checksum = "9ee2b79ae74d35e04ebe613229ad2df38b70e029cc863f7838adc9fc0ddfb3bf"
-let version = "65.2.1"
+let checksum = "0555db6d1a5aa8d5d01c950edb995a735ea7865ff615ac9291b3b9538c514af6"
+let version = "65.2.2"
 let url = "https://github.com/mozilla/glean/releases/download/v\(version)/Glean.xcframework.zip"
 
 let package = Package(
